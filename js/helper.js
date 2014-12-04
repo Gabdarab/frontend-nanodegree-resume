@@ -61,13 +61,29 @@ var googleMap = "<div id='map'></div>";
 
 /*
 The International Name challenge in Lesson 2 where you'll create a function that will need this helper code to run. Don't delete! It hooks up your code to the button you'll be appending.
-*/
+
 $(document).ready(function() {
   $('button').click(function() {
     var iName = inName() || function(){};
     $('#name').html(iName);  
   });
 })
+*/
+
+$(document).ready(function() {
+  $('button').click(function() {
+    var iName = inName(bio.name);
+    $('#name').html(iName);  
+  });
+});
+
+
+function inName(_name){
+
+	return _name.toUpperCase();
+
+};
+
 
 
 
@@ -86,8 +102,13 @@ function logClicks(x,y) {
   console.log("x location: " + x + "; y location: " + y);
 }
 
-$(document).click(function(loc) {
-  // your code goes here!
+
+$(document).click(function(loc){
+	
+	x=loc.pageX;
+	y=loc.pageY;
+
+	logClicks(x,y);
 });
 
 
@@ -120,28 +141,28 @@ function initializeMap() {
   locationFinder() returns an array of every location string from the JSONs
   written for bio, education, and work.
   */
-  function locationFinder() {
+  function locationFinder(){
     
     // initializes an empty array
     var locations = [];
 
     // adds the single location property from bio to the locations array
-    locations.push(bio.contacts.location);
+    locations.push(bio.contacts.Location);
     
     // iterates through school locations and appends each location to
     // the locations array
     for (var school in education.schools) {
-      locations.push(education.schools[school].location);
+      locations.push(education.schools[school].city);
     }
 
     // iterates through work locations and appends each location to
     // the locations array
     for (var job in work.jobs) {
-      locations.push(work.jobs[job].location);
+      locations.push(work.jobs[job].city);
     }
 
     return locations;
-  }
+  };
 
   /*
   createMapMarker(placeData) reads Google Places search results to create map pins.
